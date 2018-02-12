@@ -1,0 +1,39 @@
+    String url = "https://b2bpr.vaservices.eu/plb/PayLifeBalanceInquiry/";
+    String referrer = "https://b2bpr.vaservices.eu/plb/PayLifeBalanceInquiry/index.jsp";
+    String agent = "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0";
+    String username ="XXXXXXXXXXXXX855";
+    String pass = "XXX";
+    String errormsg = "";
+
+        protected Void doInBackground(Void... params) {
+            try {
+                // Connect to the web site
+                Connection.Response  document = Jsoup.connect(url).method(Connection.Method.GET).execute();
+                // Get the cookie
+                cookie = document.cookies();
+
+                res = Jsoup.connect(url+"j_security_check").method(Connection.Method.POST)
+                        .data("j_username",username)
+                        .data("j_password",pass)
+                        .data("Submit","Submit")
+                        .cookies(cookie)
+                        .followRedirects(true)
+                        .referrer(referrer)
+                        .userAgent(agent)
+                        .execute();
+
+                respdoc = res.parse();
+                Log.d("PREPAID",respdoc.toString());
+                Elements elements = respdoc.select("tr.style2:eq(3) td:eq(0)");
+                if(elements.text().indexOf("Remaining Balance") == 0) {
+                    betrag = respdoc.select("tr.style2:eq(3) td:eq(1)").text();
+                }else{
+                    errormsg = "Parse error, new HTML-Layout found, adjust jsoup";
+                    Log.d("PREPAID",errormsg);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }

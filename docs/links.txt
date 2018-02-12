@@ -1,0 +1,7 @@
+https://inducesmile.com/android/android-studio-add-jar-file-as-android-library/
+
+https://inducesmile.com/android/android-html-parser-using-jsoup-tutorial/
+
+http://www.yudiz.com/data-scraping-in-android-using-jsoupjava-html-parser/
+
+http://www.androidbegin.com/tutorial/android-basic-jsoup-tutorial/
